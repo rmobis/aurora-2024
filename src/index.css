@@ -1,0 +1,70 @@
+@import url('https://use.typekit.net/gye0aoe.css');
+
+:root {
+  --default-font: source-sans-pro, sans-serif;
+  --display-font: pf-mediterra, sans-serif;
+  --display-shadow: 1px 1px 4px #00000080;
+}
+
+html * {
+  outline: none;
+  box-sizing: border-box;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+button,
+input,
+textarea,
+ul,
+a {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  appearance: none;
+  list-style: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+a,
+button {
+  cursor: pointer;
+  user-select: none;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  width: 100dvw;
+  height: 100dvh;
+  background: #008d9a;
+  font-family: var(--default-font);
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #f0f5f6;
+  overflow: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  background: #f0f4f540;
+  padding: 0 0.25rem;
+  text-wrap: nowrap;
+}
+
+#root {
+  width: 100%;
+}
