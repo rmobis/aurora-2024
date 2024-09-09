@@ -23,7 +23,6 @@ export default function WizardModal({ openModal, setModalOpen }: Props) {
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const [isAttending, setIsAttending] = useState<boolean>(false);
 	const [attendees, setAttendees] = useState<Attendee[]>([]);
-	const [contactName, setContactName] = useState<string | null>(null);
 	const [contactPhone, setContactPhone] = useState<string | null>(null);
 	const [curAttendee, setCurAttendee] = useState<string | null>(null);
 
@@ -57,18 +56,16 @@ export default function WizardModal({ openModal, setModalOpen }: Props) {
 			<div className="flex min-h-[calc(100dvh-2rem)] flex-col rounded-lg bg-white px-4 py-3">
 				<Wizard header={<Header closeModal={closeModal} />} footer={<div></div>}>
 					<IsAttendingStep setIsAttending={setIsAttending} />
-					<NameStep setCurAttendee={setCurAttendee} curAttendee={curAttendee} />
+					<NameStep setCurAttendee={setCurAttendee} isAttending={isAttending}  curAttendee={curAttendee} />
 					<AgeStep curAttendee={curAttendee} addAttendee={addAttendee} />
 					<SummaryStep attendees={attendees} removeAttendee={removeAttendee} />
 					<ContactStep
 						isAttending={isAttending}
 						attendees={attendees}
-						contactName={contactName}
 						contactPhone={contactPhone}
-						setContactName={setContactName}
 						setContactPhone={setContactPhone}
 					/>
-					<SubmittedStep />
+					<SubmittedStep isAttending={isAttending} />
 				</Wizard>
 			</div>
 		</dialog>

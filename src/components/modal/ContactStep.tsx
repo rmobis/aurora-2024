@@ -5,14 +5,12 @@ import { InputMask } from '@react-input/mask';
 export type Props = {
 	isAttending: boolean;
 	attendees: Attendee[];
-	contactName: string | null;
 	contactPhone: string | null;
-	setContactName: React.Dispatch<React.SetStateAction<string | null>>;
 	setContactPhone: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-export default function ContactStep({ isAttending, attendees, contactName, contactPhone, setContactName, setContactPhone }: Props) {
-	const { nextStep, handleStep } = useWizard();
+export default function ContactStep({ isAttending, attendees, contactPhone, setContactPhone }: Props) {
+	const { nextStep, handleStep, isLoading } = useWizard();
 
 	async function submitForm() {
 		await fetch('https://api.web3forms.com/submit', {
@@ -22,12 +20,11 @@ export default function ContactStep({ isAttending, attendees, contactName, conta
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-				access_key: '19548a65-1a8e-49c9-84e1-73bdde03f350',
-				subject: 'New Attendance Confirmation',
-				isAttending,
-				attendees: attendees.map((attendee: Attendee) => `${attendee.name}: ${attendee.age}`).join('\n'),
-				contactName,
-				contactPhone
+				access_key: 'e60721d7-49a1-4c13-95f6-6e1106721d11',
+				subject: 'Presença Confirmada',
+				confirmado: isAttending ? 'sim' : 'não',
+				convidados: attendees.map((attendee: Attendee) => `${attendee.name}: ${attendee.age}`).join('\n'),
+				telefone: contactPhone
 			})
         });
 	}
@@ -38,17 +35,23 @@ export default function ContactStep({ isAttending, attendees, contactName, conta
 		<div className="flex flex-col justify-between text-center grow text-balance">
 			<div>
 				<h1 className="my-4 text-2xl font-bold">Quer receber um lembrete da festa?</h1>
-				<p>Deixe seu contato!</p>
+				<p>Deixe seu telefone!</p>
 			</div>
 
-			<div className="flex flex-col gap-2">
-				<input className="p-1 text-2xl bg-teal-200 border-2 border-teal-500 border-solid rounded-lg" type="text" name="nome" placeholder="Nome" onChange={(e) => setContactName(e.target.value)} />
-				<InputMask className="p-1 text-2xl bg-teal-200 border-2 border-teal-500 border-solid rounded-lg" type="phone" name="phone" placeholder="Telefone" mask="(__) _____-____" replacement={{ _: /\d/ }} onChange={(e) => setContactPhone(e.target.value)} />
-			</div>
+			<InputMask
+				className="box-content w-full py-5 text-4xl text-center outline-none"
+				placeholder="(__) _____-____"
+				type="text"
+				onChange={(e) => setContactPhone(e.target.value)}
+				mask="(__) _____-____"
+				showMask={true}
+				replacement={{ _: /\d/ }}
+			/>
 
 			<button
 				className="w-full p-2 mt-10 text-4xl font-thin bg-teal-600 rounded-lg"
 				onClick={() => nextStep()}
+				disabled={isLoading}
 			>
 				Confirmar
 			</button>
