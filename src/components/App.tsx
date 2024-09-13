@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useState } from 'react';
+import { BaseSyntheticEvent, useEffect, useState } from 'react';
 import ExternalLinkIcon from './ExternalLinkIcon';
 import WizardModal from './modal/WizardModal';
 
@@ -9,6 +9,13 @@ export default function App() {
 		e.preventDefault();
 		setModalOpen(true);
 	}
+
+	useEffect(() => {
+		const usp = new URLSearchParams(window.location.search);
+		if (usp.has('confirmar')) {
+			setModalOpen(true);
+		}
+	}, []);
 
 	return (
 		<>
